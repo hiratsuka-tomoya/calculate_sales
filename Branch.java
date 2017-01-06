@@ -1,37 +1,15 @@
 package jp.co.iccom.hiratsuka_tomoya.calculate_sales;
 
-public class Branch extends DifinitionData{
+public class Branch extends DifinitionData {
 
-//	String code;
-//	String name;
-//	long amount;
-//
-//	Branch(){
-//		name = new String();
-//	}
-//
-//	void setCode(String code) {
-//		this.code = code;
-//	}
-//
-//	void setName(String name){
-//		this.name = name;
-//	}
-//
-//	void addAmount(long amount){
-//		this.amount += amount;
-//	}
-//
-//	String getCode(){
-//		return code;
-//	}
-//
-//	String getName(){
-//		return name;
-//	}
-//
-//	long getAmount() {
-//		return amount;
-//	}
-
+	boolean setCode(String code) {
+		if (code.matches("\\d{3}")) {
+			System.out.println("check");
+			this.code = code;
+			return true;
+		} else {
+			System.out.println("支店定義ファイルのフォーマットが不正です");
+			return false;
+		}
+	}
 }
