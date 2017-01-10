@@ -12,8 +12,9 @@ public class DifinitionData {
 		return true;
 	}
 
-	void setName(String name){
+	boolean setName(String name){
 		this.name = name;
+		return true;
 	}
 
 	boolean addAmount(long amount){

@@ -4,7 +4,6 @@ public class Branch extends DifinitionData {
 
 	boolean setCode(String code) {
 		if (code.matches("\\d{3}")) {
-			System.out.println("check");
 			this.code = code;
 			return true;
 		} else {
