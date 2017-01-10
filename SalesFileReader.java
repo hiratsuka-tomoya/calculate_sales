@@ -70,8 +70,9 @@ public class SalesFileReader {
 						strLineList.add(strLine);
 					}
 
-					//行数をチェック
-					if (strLineList.size() != Constants.ROW_NUM_SALES_FILE) {
+					//行数、金額のフォーマットをチェック
+					if ((strLineList.size() != Constants.ROW_NUM_SALES_FILE) ||
+							(strLineList.get(2).matches("\\d*") == false)){
 						System.out.println(fileName + "のフォーマットが不正です");
 						return null;
 					}
@@ -79,7 +80,7 @@ public class SalesFileReader {
 					//売上オブジェクトにデータを登録
 					sales.setBranchCode(strLineList.get(0));
 					sales.setProductCode(strLineList.get(1));
-					sales.setAmount(Integer.parseInt(strLineList.get(2)));
+					sales.setAmount(Long.parseLong(strLineList.get(2)));
 
 					//売上オブジェクトをリストに追加
 					salesList.add(sales);

@@ -103,7 +103,7 @@ public class CalculateSales {
 				fileOutput.delete();
 			}else {
 				//既存かつロックされていればエラー表示
-				System.out.println(Constants.ERROR_MASSAGE_OTHER + "check");
+				System.out.println(Constants.ERROR_MASSAGE_OTHER);
 				return false;
 			}
 		}

@@ -23,10 +23,6 @@ public class Sales{
 		this.productCode = code;
 	}
 
-	void addAmount(long amount){
-		this.amount += amount;
-	}
-
 	String getBranchCode(){
 		return branchCode;
 	}

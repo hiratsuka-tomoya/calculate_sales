@@ -10,5 +10,6 @@ public final class Constants {
 	public static final int COLUMN_NUM_DIFINITION_FILE = 2;					//定義ファイルの列数
 	public static final int FILE_NUM_SALES = 3; 							//売上ファイルの数
 	public static final int ROW_NUM_SALES_FILE = 3;							//売上ファイルの行数
+	public static final long MAX_AMOUNT = 999999999;
 	public static final String ERROR_MASSAGE_OTHER = "予期せぬエラーが発生しました";
 }
