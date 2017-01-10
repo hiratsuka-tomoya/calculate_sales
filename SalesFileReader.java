@@ -32,10 +32,7 @@ public class SalesFileReader {
 
 			//ファイル名が売上ファイルの形式に一致するものを検索し、データをsalesListに追加
 			for(String fileName: fileNames){
-				//3ファイル見つけていれば検索を終了
-				if (fileCnt >= 3) {
-					break;
-				}else if (fileName.matches("\\d{8}.rcd")){
+				if (fileName.matches("\\d{8}.rcd")){
 					fileCnt++;
 
 					String filePath = CalculateSales.getFilePath(folderPath, fileName);
@@ -85,11 +82,6 @@ public class SalesFileReader {
 					//売上オブジェクトをリストに追加
 					salesList.add(sales);
 				}
-			}
-
-			if (fileCnt < Constants.FILE_NUM_SALES) {
-				System.out.println(Constants.ERROR_MASSAGE_OTHER);
-				return null;
 			}
 
 		}catch(FileNotFoundException e){

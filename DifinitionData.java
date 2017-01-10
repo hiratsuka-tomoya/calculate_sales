@@ -19,7 +19,7 @@ public class DifinitionData {
 
 	boolean addAmount(long amount){
 		this.amount += amount;
-		if(this.amount > Constants.MAX_AMOUNT			) {
+		if(this.amount > Constants.MAX_AMOUNT) {
 			System.out.println("合計金額が10桁を超えました");
 			return false;
 		}
