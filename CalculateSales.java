@@ -12,13 +12,18 @@ public class CalculateSales {
 
 	public static void main(String[] args){
 
+		//コマンドライン引数の数をチェック
+		if (args.length != 1) {
+			System.out.println(Constants.ERROR_MASSAGE_OTHER);
+		}
+
 		//コマンドライン引数からフォルダパスを取得
 		String folderPath = args[0];
 
-		//引数のパスのディレクトリが存在するか確認
+		//コマンドライン引数のパスのディレクトリが存在するか確認
 		File dir = new File(folderPath);
 		if (dir.exists() == false) {
-			System.out.println("予期せぬエラーが発生しました");
+			System.out.println(Constants.ERROR_MASSAGE_OTHER);
 			return;
 		}
 
@@ -52,7 +57,7 @@ public class CalculateSales {
 				}
 			}else {
 				//該当の支店が存在しなければ終了
-				System.out.println("<" + sales.fileName + ">" + "の支店コードが不正です");
+				System.out.println(sales.fileName + "の支店コードが不正です");
 				return;
 			}
 			if(productMap.containsKey(sales.getProductCode())){
@@ -62,20 +67,18 @@ public class CalculateSales {
 				}
 			}else {
 				//該当の商品が存在しなければ終了
-				System.out.println("<" + sales.fileName + ">" + "の商品コードが不正です");
+				System.out.println(sales.fileName + "の商品コードが不正です");
 				return;
 			}
 		}
 
 		//支店別集計ファイル出力
 		if (outputCalculateFile(branchMap, folderPath, Constants.FILE_NAME_BRANCH_OUTPUT) == false) {
-			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
 
 		//商品別集計ファイル出力
 		if (outputCalculateFile(productMap, folderPath, Constants.FILE_NAME_PRODUCT_OUTPUT) == false) {
-			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
 	}
@@ -85,7 +88,7 @@ public class CalculateSales {
 	public static Boolean outputCalculateFile(HashMap<String,? extends DifinitionData> map, String folderPath, String fileName) {
 
 		ArrayList<DifinitionData> sortList = new ArrayList<DifinitionData>(map.values());	//ソート用リスト
-		String filePathOutput = folderPath + File.separator + fileName;
+		String filePathOutput = getFilePath(folderPath, fileName);
 		File fileOutput = new File(filePathOutput);
 		FileWriter fw = null;
 		BufferedWriter bw = null;
@@ -95,14 +98,20 @@ public class CalculateSales {
 
 		//出力ファイルが既に存在するなら削除
 		if(fileOutput.exists()) {
-			fileOutput.delete();
+			if (fileOutput.canWrite() ) {
+				fileOutput.delete();
+			}else {
+				//既存かつロックされていればエラー表示
+				System.out.println(Constants.ERROR_MASSAGE_OTHER);
+				return false;
+			}
 		}
 
 		//出力ファイル作成
 		try {
 			fileOutput.createNewFile();
 		} catch (IOException e) {
-		    System.out.println("予期せぬエラーが発生しました");
+		    System.out.println(Constants.ERROR_MASSAGE_OTHER);
 		}
 
 		try {
@@ -114,7 +123,7 @@ public class CalculateSales {
 				bw.newLine();
 			}
 		}catch (IOException e) {
-		    System.out.println("予期せぬエラーが発生しました");
+		    System.out.println(Constants.ERROR_MASSAGE_OTHER);
 		    return false;
 		}finally {
 			try {
@@ -122,10 +131,20 @@ public class CalculateSales {
 					bw.close();
 				}
 			} catch (IOException e) {
-				System.out.println("予期せぬエラーが発生しました");
+				System.out.println(Constants.ERROR_MASSAGE_OTHER);
 				return false;
 			  }
 		}
 		return true;
+	}
+
+	//ファイルパスを返す
+	public static String getFilePath(String folderPath, String fileName) {
+		//フォルダパスの末尾がパスセパレーターかどうかで分岐
+		if (folderPath.substring(folderPath.length()) == File.separator) {
+			return folderPath + fileName;
+		}else {
+			return folderPath + File.separator + fileName;
+		}
 	}
 }

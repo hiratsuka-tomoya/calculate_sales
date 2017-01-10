@@ -18,7 +18,7 @@ public abstract class DifinitionFileReader {
 		//ファイル名、ファイルパスを取得
 		this.fileName = fileName;
 		this.fileNameJap = fileNameJap;
-		filePath = folderPath + File.separator + fileName;
+		filePath = CalculateSales.getFilePath(folderPath, fileName);
 	}
 
 	//DifinitionDataか子クラスのオブジェクトを新しく作成して返す
@@ -58,7 +58,9 @@ public abstract class DifinitionFileReader {
 
 				//定義データオブジェクトを作成し、定義ファイル一行分の内容を登録
 				DifinitionData difData = returnNewDataObject();
-				difData.setCode(strSplit[0]);
+				if (difData.setCode(strSplit[0]) == false) {
+					return null;
+				}
 				difData.setName(strSplit[1]);
 
 				//作成した定義データオブジェクトをハッシュマップに追加
@@ -66,10 +68,10 @@ public abstract class DifinitionFileReader {
 
 			}
 		}catch(FileNotFoundException e){
-			  System.out.println("予期せぬエラーが発生しました");
+			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
 			  return null;
 		}catch(IOException e){
-			  System.out.println("予期せぬエラーが発生しました");
+			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
 			  return null;
 		}finally {
 			try {
@@ -77,7 +79,7 @@ public abstract class DifinitionFileReader {
 					br.close();
 				}
 			} catch (IOException e) {
-				System.out.println("予期せぬエラーが発生しました");
+				System.out.println(Constants.ERROR_MASSAGE_OTHER);
 			}
 		}
 

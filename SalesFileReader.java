@@ -32,23 +32,26 @@ public class SalesFileReader {
 
 			//ファイル名が売上ファイルの形式に一致するものを検索し、データをsalesListに追加
 			for(String fileName: fileNames){
-				if(fileName.matches("\\d{8}.rcd")){
-
+				//3ファイル見つけていれば検索を終了
+				if (fileCnt >= 3) {
+					break;
+				}else if (fileName.matches("\\d{8}.rcd")){
 					fileCnt++;
 
-					String filePath = folderPath + File.separator + fileName;
+					String filePath = CalculateSales.getFilePath(folderPath, fileName);
 					File file = new File(filePath);
+
+					//対象がファイルかどうかチェック
+					if (file.isFile() == false) {
+						System.out.println("売上ファイル名が連番になっていません");
+						return null;
+					}
+
 					fr = new FileReader(filePath);
 					br = new BufferedReader(fr);
 					String strLine;
 					ArrayList<String> strLineList = new ArrayList<String>();
 					Sales sales = new Sales(fileName);
-
-					//対象がファイルかどうかチェック
-					if (file.isFile() != true) {
-						System.out.println("予期せぬエラーが発生しました");
-						return null;
-					}
 
 					if(fileCnt == 1){
 						//1ファイル目なら番号を記憶
@@ -59,10 +62,6 @@ public class SalesFileReader {
 							//ファイル名が連番か
 							System.out.println("売上ファイル名が連番になっていません");
 							return null;
-						}else if(fileCnt > Constants.FILE_NUM_SALES){
-							//ファイル数が正しいか
-							System.out.println("予期せぬエラーが発生しました");
-							return null;
 						}
 					}
 
@@ -72,8 +71,8 @@ public class SalesFileReader {
 					}
 
 					//行数をチェック
-					if (strLineList.size() > Constants.ROW_NUM_SALES_FILE) {
-						System.out.println("<" + fileName + ">のフォーマットが不正です");
+					if (strLineList.size() != Constants.ROW_NUM_SALES_FILE) {
+						System.out.println(fileName + "のフォーマットが不正です");
 						return null;
 					}
 
@@ -86,10 +85,16 @@ public class SalesFileReader {
 					salesList.add(sales);
 				}
 			}
+
+			if (fileCnt < Constants.FILE_NUM_SALES) {
+				System.out.println(Constants.ERROR_MASSAGE_OTHER);
+				return null;
+			}
+
 		}catch(FileNotFoundException e){
-			  System.out.println("予期せぬエラーが発生しました");
+			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
 		}catch(IOException e){
-			  System.out.println("予期せぬエラーが発生しました");
+			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
 		}finally {
 			try {
 				if (fr != null) {
@@ -99,7 +104,7 @@ public class SalesFileReader {
 					br.close();
 				}
 			} catch (IOException e) {
-				System.out.println("予期せぬエラーが発生しました");
+				System.out.println(Constants.ERROR_MASSAGE_OTHER);
 			}
 		}
 		return salesList;
