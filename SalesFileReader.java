@@ -93,8 +93,10 @@ public class SalesFileReader {
 
 		}catch(FileNotFoundException e){
 			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
+			  return null;
 		}catch(IOException e){
 			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
+			  return null;
 		}finally {
 			try {
 				if (fr != null) {

@@ -15,6 +15,7 @@ public class CalculateSales {
 		//コマンドライン引数の数をチェック
 		if (args.length != 1) {
 			System.out.println(Constants.ERROR_MASSAGE_OTHER);
+			return;
 		}
 
 		//コマンドライン引数からフォルダパスを取得
@@ -102,7 +103,7 @@ public class CalculateSales {
 				fileOutput.delete();
 			}else {
 				//既存かつロックされていればエラー表示
-				System.out.println(Constants.ERROR_MASSAGE_OTHER);
+				System.out.println(Constants.ERROR_MASSAGE_OTHER + "check");
 				return false;
 			}
 		}
@@ -112,6 +113,7 @@ public class CalculateSales {
 			fileOutput.createNewFile();
 		} catch (IOException e) {
 		    System.out.println(Constants.ERROR_MASSAGE_OTHER);
+		    return false;
 		}
 
 		try {
