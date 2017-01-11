@@ -67,10 +67,15 @@ public class SalesFileReader {
 						strLineList.add(strLine);
 					}
 
-					//行数、金額のフォーマットをチェック
-					if ((strLineList.size() != Constants.ROW_NUM_SALES_FILE) ||
-							(strLineList.get(2).matches("\\d*") == false)){
+					//行数をチェック
+					if (strLineList.size() != Constants.ROW_NUM_SALES_FILE){
 						System.out.println(fileName + "のフォーマットが不正です");
+						return null;
+					}
+
+					//金額のフォーマットをチェック
+					if (strLineList.get(2).matches("\\d*") == false) {
+						System.out.println(Constants.ERROR_MASSAGE_OTHER);
 						return null;
 					}
 
