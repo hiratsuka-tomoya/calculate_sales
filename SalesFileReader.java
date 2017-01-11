@@ -2,7 +2,6 @@ package jp.co.iccom.hiratsuka_tomoya.calculate_sales;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,13 +31,12 @@ public class SalesFileReader {
 			//ファイル名が売上ファイルの形式に一致するものを検索し、データをsalesListに追加
 			for(String fileName: fileNames){
 
-				String filePath = CalculateSales.getFilePath(folderPath, fileName);
-				File file = new File(filePath);
+				File file = new File(folderPath, fileName);
 
 				if (fileName.matches("\\d{8}.rcd") && file.isFile() == true){
 					fileCnt++;
 
-					br = new BufferedReader(new FileReader(filePath));
+					br = new BufferedReader(new FileReader(file));
 					String strLine;
 					ArrayList<String> strLineList = new ArrayList<String>();
 					Sales sales = new Sales(fileName);
@@ -82,9 +80,6 @@ public class SalesFileReader {
 				}
 			}
 
-		}catch(FileNotFoundException e){
-			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
-			  return null;
 		}catch(IOException e){
 			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
 			  return null;

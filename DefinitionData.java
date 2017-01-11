@@ -5,7 +5,11 @@ public class DefinitionData {
 
 	private String code;
 	private String name;
-	private long amount;
+	private Long amount;
+
+	DefinitionData() {
+		amount = new Long(0);
+	}
 
 	boolean setCode(String code) {
 		this.code = code;
@@ -30,7 +34,7 @@ public class DefinitionData {
 		this.amount = amount;
 	}
 
-	public long getAmount() {
+	public Long getAmount() {
 		return amount;
 	}
 

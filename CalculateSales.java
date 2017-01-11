@@ -60,7 +60,7 @@ public class CalculateSales {
 				}
 			} else {
 				// 該当の支店が存在しなければ終了
-				System.out.println(sales.fileName + "の支店コードが不正です");
+				System.out.println(sales.getFileName() + "の支店コードが不正です");
 				return;
 			}
 			if (commodityMap.containsKey(sales.getCommodityCode())) {
@@ -70,7 +70,7 @@ public class CalculateSales {
 				}
 			} else {
 				// 該当の商品が存在しなければ終了
-				System.out.println(sales.fileName + "の商品コードが不正です");
+				System.out.println(sales.getFileName() + "の商品コードが不正です");
 				return;
 			}
 		}
@@ -92,8 +92,7 @@ public class CalculateSales {
 			String fileName) {
 
 		ArrayList<DefinitionData> sortList = new ArrayList<DefinitionData>(map.values()); // ソート用リスト
-		String filePathOutput = getFilePath(folderPath, fileName);
-		File fileOutput = new File(filePathOutput);
+		File fileOutput = new File(folderPath, fileName);
 		BufferedWriter bw = null;
 
 		// 売上で降順ソート
@@ -139,15 +138,5 @@ public class CalculateSales {
 			}
 		}
 		return true;
-	}
-
-	// ファイルパスを返す
-	public static String getFilePath(String folderPath, String fileName) {
-		// フォルダパスの末尾がパスセパレーターかどうかで分岐
-		if (folderPath.substring(folderPath.length()) == File.separator) {
-			return folderPath + fileName;
-		} else {
-			return folderPath + File.separator + fileName;
-		}
 	}
 }

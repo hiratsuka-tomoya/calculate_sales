@@ -2,7 +2,6 @@ package jp.co.iccom.hiratsuka_tomoya.calculate_sales;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,15 +9,15 @@ import java.util.HashMap;
 public abstract class DefinitionFileReader {
 //定義ファイルの種類に応じて子クラスでファイル名と生成するオブジェクトを指定して利用
 
-	String filePath;
-	String fileName;
-	String fileNameJap;		//ファイルの日本語名「◯◯定義ファイル」
+	private String fileName;
+	private String folderPath;
+	private String fileNameJap;		//ファイルの日本語名「◯◯定義ファイル」
 
 	DefinitionFileReader(String folderPath, String fileName, String fileNameJap){
 		//ファイル名、ファイルパスを取得
 		this.fileName = fileName;
 		this.fileNameJap = fileNameJap;
-		filePath = CalculateSales.getFilePath(folderPath, fileName);
+		this.folderPath = folderPath;
 	}
 
 	//DifinitionDataか子クラスのオブジェクトを新しく作成して返す
@@ -29,7 +28,7 @@ public abstract class DefinitionFileReader {
 	public HashMap<String,DefinitionData> getDifinitionDataMap(){
 
 		HashMap<String,DefinitionData> difDataList = new HashMap<String,DefinitionData>();
-		File file = new File(filePath);
+		File file = new File(folderPath, fileName);
 		BufferedReader br = null;
 
 		//ファイルの存在を確認
@@ -65,9 +64,6 @@ public abstract class DefinitionFileReader {
 				difDataList.put(difData.getCode(),difData);
 
 			}
-		}catch(FileNotFoundException e){
-			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
-			  return null;
 		}catch(IOException e){
 			  System.out.println(Constants.ERROR_MASSAGE_OTHER);
 			  return null;

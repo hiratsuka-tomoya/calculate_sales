@@ -2,13 +2,14 @@ package jp.co.iccom.hiratsuka_tomoya.calculate_sales;
 
 public class Sales{
 
-	String fileName;
-	String branchCode;
-	String commodityCode;
-	long amount;
+	private String fileName;
+	private String branchCode;
+	private String commodityCode;
+	private Long amount;
 
 	Sales (String fileName) {
-		this.fileName = fileName;
+		this.setFileName(fileName);
+		amount = new Long(0);
 	}
 
 	void setAmount(long amount){
@@ -33,6 +34,14 @@ public class Sales{
 
 	long getAmount() {
 		return amount;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }
