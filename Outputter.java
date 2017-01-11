@@ -11,8 +11,7 @@ import java.util.Map;
 public class Outputter {
 
 	// 集計ファイル出力
-	public Boolean outputCalculateFile(Map<String, ? extends DefinitionData> map, String folderPath,
-			String fileName) {
+	public Boolean outputCalculateFile(Map<String, ? extends DefinitionData> map, String folderPath, String fileName) {
 
 		ArrayList<DefinitionData> sortList = new ArrayList<DefinitionData>(map.values()); // ソート用リスト
 		File fileOutput = new File(folderPath, fileName);
@@ -21,15 +20,10 @@ public class Outputter {
 		// 売上で降順ソート
 		Collections.sort(sortList, new DefinitionDataComparator());
 
-		// 出力ファイルが既に存在するなら削除
-		if (fileOutput.exists()) {
-			if (fileOutput.canWrite()) {
-				fileOutput.delete();
-			} else {
-				// 既存かつロックされていればエラー表示
-				System.out.println(Constants.ERROR_MASSAGE_OTHER);
-				return false;
-			}
+		// 既存かつロックされていればエラー表示
+		if (fileOutput.exists() && fileOutput.canWrite() == false) {
+			System.out.println(Constants.ERROR_MASSAGE_OTHER);
+			return false;
 		}
 
 		// 出力ファイル作成
@@ -44,7 +38,7 @@ public class Outputter {
 			bw = new BufferedWriter(new FileWriter(fileOutput));
 			for (DefinitionData dd : sortList) {
 				// リストの内容を一行ずつファイルに書き込む
-				bw.write(dd.getCode() + "," + dd.getName() + "," + dd.getAmount());
+				bw.write(dd.toString());
 				bw.newLine();
 			}
 		} catch (IOException e) {

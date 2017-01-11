@@ -11,6 +11,11 @@ public class DefinitionData {
 		amount = new Long(0);
 	}
 
+	@Override
+	public String toString() {
+	    return String.format("%s,%s,%s", this.code, this.name, this.amount);
+	}
+
 	boolean setCode(String code) {
 		this.code = code;
 		return true;
