@@ -22,7 +22,6 @@ public class SalesFileReader {
 	public ArrayList<Sales> getSalesList(){
 
 		ArrayList<Sales> salesList = new ArrayList<Sales>();
-		FileReader fr = null;
 		BufferedReader br = null;
 
 		try{
@@ -32,20 +31,14 @@ public class SalesFileReader {
 
 			//ファイル名が売上ファイルの形式に一致するものを検索し、データをsalesListに追加
 			for(String fileName: fileNames){
-				if (fileName.matches("\\d{8}.rcd")){
+
+				String filePath = CalculateSales.getFilePath(folderPath, fileName);
+				File file = new File(filePath);
+
+				if (fileName.matches("\\d{8}.rcd") && file.isFile() == true){
 					fileCnt++;
 
-					String filePath = CalculateSales.getFilePath(folderPath, fileName);
-					File file = new File(filePath);
-
-					//対象がファイルかどうかチェック
-					if (file.isFile() == false) {
-						System.out.println("売上ファイル名が連番になっていません");
-						return null;
-					}
-
-					fr = new FileReader(filePath);
-					br = new BufferedReader(fr);
+					br = new BufferedReader(new FileReader(filePath));
 					String strLine;
 					ArrayList<String> strLineList = new ArrayList<String>();
 					Sales sales = new Sales(fileName);
@@ -97,9 +90,6 @@ public class SalesFileReader {
 			  return null;
 		}finally {
 			try {
-				if (fr != null) {
-					fr.close();
-				}
 				if (br != null) {
 					br.close();
 				}
