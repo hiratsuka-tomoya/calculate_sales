@@ -37,14 +37,14 @@ public class CalculateSales {
 
 		// リーダーインスタンス生成
 		DefinitionFileReader branchFileReader = new BranchFileReader(folderPath);
-		DefinitionFileReader productFileReader = new CommodityFileReader(folderPath);
+		DefinitionFileReader commodityFileReader = new CommodityFileReader(folderPath);
 		SalesFileReader salesFileReader = new SalesFileReader(folderPath);
 
 		// ファイルを読み込む
 		if ((branchMap = branchFileReader.getDifinitionDataMap()) == null) {
 			return;
 		}
-		if ((commodityMap = productFileReader.getDifinitionDataMap()) == null) {
+		if ((commodityMap = commodityFileReader.getDifinitionDataMap()) == null) {
 			return;
 		}
 		if ((salesList = salesFileReader.getSalesList()) == null) {
@@ -63,8 +63,8 @@ public class CalculateSales {
 				System.out.println(sales.fileName + "の支店コードが不正です");
 				return;
 			}
-			if (commodityMap.containsKey(sales.getProductCode())) {
-				if (commodityMap.get(sales.getProductCode()).addAmount(sales.getAmount()) == false) {
+			if (commodityMap.containsKey(sales.getCommodityCode())) {
+				if (commodityMap.get(sales.getCommodityCode()).addAmount(sales.getAmount()) == false) {
 					// 売上の合計額が10桁を超えていれば終了
 					return;
 				}
@@ -81,7 +81,7 @@ public class CalculateSales {
 		}
 
 		// 商品別集計ファイル出力
-		if (outputCalculateFile(commodityMap, folderPath, Constants.FILE_NAME_PRODUCT_OUTPUT) == false) {
+		if (outputCalculateFile(commodityMap, folderPath, Constants.FILE_NAME_COMMODITY_OUTPUT) == false) {
 			return;
 		}
 	}

@@ -4,7 +4,7 @@ public class Sales{
 
 	String fileName;
 	String branchCode;
-	String productCode;
+	String commodityCode;
 	long amount;
 
 	Sales (String fileName) {
@@ -19,16 +19,16 @@ public class Sales{
 		this.branchCode = code;
 	}
 
-	void setProductCode(String code) {
-		this.productCode = code;
+	void setCommodityCode(String code) {
+		this.commodityCode = code;
 	}
 
 	String getBranchCode(){
 		return branchCode;
 	}
 
-	String getProductCode(){
-		return productCode;
+	String getCommodityCode(){
+		return commodityCode;
 	}
 
 	long getAmount() {

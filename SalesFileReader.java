@@ -74,7 +74,7 @@ public class SalesFileReader {
 
 					//売上オブジェクトにデータを登録
 					sales.setBranchCode(strLineList.get(0));
-					sales.setProductCode(strLineList.get(1));
+					sales.setCommodityCode(strLineList.get(1));
 					sales.setAmount(Long.parseLong(strLineList.get(2)));
 
 					//売上オブジェクトをリストに追加
